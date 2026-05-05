@@ -159,6 +159,12 @@ resource "aws_ec2_transit_gateway_route" "nonprod_to_prd_blackhole" {
   blackhole                      = true
 }
 
+resource "aws_ec2_transit_gateway_route" "nonprod_default_to_outbound" {
+  destination_cidr_block         = "0.0.0.0/0"
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.outbound_vpc_attachment.id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgwrt_nonprod.id
+}
+
 #############################################
 # Static Routes: PROD RT
 #############################################
@@ -172,6 +178,12 @@ resource "aws_ec2_transit_gateway_route" "prod_to_dev_blackhole" {
   destination_cidr_block         = var.vpc_dev_cidr
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgwrt_prod.id
   blackhole                      = true
+}
+
+resource "aws_ec2_transit_gateway_route" "prod_default_to_outbound" {
+  destination_cidr_block         = "0.0.0.0/0"
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.outbound_vpc_attachment.id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgwrt_prod.id
 }
 
 #############################################
