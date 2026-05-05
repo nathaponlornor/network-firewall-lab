@@ -4,7 +4,7 @@
 #############################################
 
 locals {
-  ssm_services = ["ssm", "ssmmessages"]
+  ssm_services = ["ssm", "ssmmessages", "ec2"]
 }
 
 # Security Group for VPC Endpoints
