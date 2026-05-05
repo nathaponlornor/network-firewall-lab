@@ -72,6 +72,13 @@ resource "aws_route" "outbound_public_igw" {
   gateway_id             = aws_internet_gateway.outbound.id
 }
 
+resource "aws_route" "outbound_public_to_tgw" {
+  route_table_id         = aws_route_table.outbound_public.id
+  destination_cidr_block = "10.100.0.0/16"
+  transit_gateway_id     = aws_ec2_transit_gateway.lab_tgw.id
+  depends_on             = [aws_ec2_transit_gateway_vpc_attachment.outbound_vpc_attachment]
+}
+
 resource "aws_route_table_association" "outbound_public_b" {
   subnet_id      = aws_subnet.outbound_public_b.id
   route_table_id = aws_route_table.outbound_public.id
