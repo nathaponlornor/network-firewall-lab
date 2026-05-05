@@ -77,6 +77,13 @@ resource "aws_instance" "test_dev" {
   vpc_security_group_ids = [aws_security_group.test_dev.id]
   iam_instance_profile   = aws_iam_instance_profile.ssm_profile.name
 
+  user_data = <<-EOF
+    #!/bin/bash
+    yum install -y amazon-ssm-agent
+    systemctl enable amazon-ssm-agent
+    systemctl start amazon-ssm-agent
+  EOF
+
   tags = { Name = "${var.project_name}-Test-DEV-EC2" }
 }
 
@@ -87,6 +94,13 @@ resource "aws_instance" "test_prd" {
   subnet_id              = aws_subnet.prd_app_b.id
   vpc_security_group_ids = [aws_security_group.test_prd.id]
   iam_instance_profile   = aws_iam_instance_profile.ssm_profile.name
+
+  user_data = <<-EOF
+    #!/bin/bash
+    yum install -y amazon-ssm-agent
+    systemctl enable amazon-ssm-agent
+    systemctl start amazon-ssm-agent
+  EOF
 
   tags = { Name = "${var.project_name}-Test-PRD-EC2" }
 }
