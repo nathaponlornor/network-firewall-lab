@@ -9,6 +9,7 @@ resource "aws_ec2_transit_gateway" "lab_tgw" {
   default_route_table_propagation = "disable"
   dns_support                     = "enable"
   vpn_ecmp_support                = "enable"
+  transit_gateway_cidr_blocks     = ["169.254.100.0/24"]
   tags = { Name = "${var.project_name}-TGW-01" }
 }
 
